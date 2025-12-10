@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Paradise Donut Company – Cheesecake Menu</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Optional: nicer font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      :root {
+        --bg: #0f172a;
+        --bg-card: #020617;
+        --accent: #f97316;
+        --accent-soft: rgba(249, 115, 22, 0.15);
+        --text: #e5e7eb;
+        --text-muted: #9ca3af;
+        --border: #1f2933;
+        --radius-lg: 18px;
+        --shadow-soft: 0 18px 40px rgba(15, 23, 42, 0.55);
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        min-height: 100vh;
+        font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont,
+          sans-serif;
+        color: var(--text);
+        background: radial-gradient(
+          circle at top,
+          #1f2937 0,
+          #020617 45%,
+          #020617 100%
+        );
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        padding: 2rem 1rem 3rem;
+      }
+
+      .page {
+        width: 100%;
+        max-width: 1100px;
+      }
+
+      header {
+        margin-bottom: 2.2rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.9rem;
+      }
+
+      .badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        padding: 0.25rem 0.75rem;
+        border-radius: 999px;
+        background: rgba(15, 23, 42, 0.85);
+        border: 1px solid rgba(148, 163, 184, 0.25);
+        font-size: 0.75rem;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        color: var(--text-muted);
+      }
+
+      .badge-dot {
+        width: 7px;
+        height: 7px;
+        border-radius: 999px;
+        background: #22c55e;
+        box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.4);
+      }
+
+      h1 {
+        font-size: clamp(2rem, 3vw, 2.4rem);
+        font-weight: 700;
+        letter-spacing: -0.03em;
+      }
+
+      h1 span {
+        color: var(--accent);
+      }
+
+      .subtitle {
+        max-width: 700px;
+        font-size: 0.95rem;
+        color: var(--text-muted);
+        line-height: 1.6;
+      }
+
+      .pill-row {
+        margin-top: 0.4rem;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+      }
+
+      .pill {
+        font-size: 0.75rem;
+        padding: 0.3rem 0.7rem;
+        border-radius: 999px;
+        border: 1px solid rgba(148, 163, 184, 0.25);
+        color: var(--text-muted);
+      }
+
+      main {
+        background: radial-gradient(
+          circle at top left,
+          rgba(249, 115, 22, 0.08),
+          rgba(15, 23, 42, 0.98)
+        );
+        border-radius: 26px;
+        border: 1px solid rgba(148, 163, 184, 0.2);
+        box-shadow: var(--shadow-soft);
+        padding: 1.5rem 1.3rem 1.6rem;
+      }
+
+      .toolbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1.3rem;
+        gap: 0.75rem;
+        flex-wrap: wrap;
+      }
+
+      .toolbar-left {
+        display: flex;
+        align-items: center;
+        gap: 0.7rem;
+        flex-wrap: wrap;
+      }
+
+      .tag {
+        font-size: 0.78rem;
+        padding: 0.25rem 0.7rem;
+        border-radius: 999px;
+        background: rgba(15, 23, 42, 0.9);
+        border: 1px solid rgba(148, 163, 184, 0.35);
+        color: var(--text-muted);
+        display: inline-flex;
+        align-items: center;
+        gap: 0.35rem;
+      }
+
+      .stat {
+        font-size: 0.78rem;
+        color: var(--text-muted);
+        display: inline-flex;
+        align-items: center;
+        gap: 0.3rem;
+      }
+
+      .dot {
+        width: 4px;
+        height: 4px;
+        border-radius: 999px;
+        background: rgba(148, 163, 184, 0.8);
+      }
+
+      .filter-select {
+        padding: 0.45rem 0.6rem;
+        border-radius: 999px;
+        border: 1px solid rgba(148, 163, 184, 0.35);
+        background: rgba(15, 23, 42, 0.9);
+        color: var(--text);
+        font-size: 0.8rem;
+        outline: none;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+        gap: 1rem;
+      }
+
+      .card {
+        background: radial-gradient(
+          circle at top,
+          rgba(15, 23, 42, 0.2),
+          rgba(15, 23, 42, 0.95)
+        );
+        border-radius: var(--radius-lg);
+        border: 1px solid rgba(15, 23, 42, 0.9);
+        padding: 0.9rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.55rem;
+        transition: transform 0.18s ease, box-shadow 0.18s ease,
+          border-color 0.18s ease, background 0.18s ease;
+        cursor: default;
+      }
+
+      .card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 14px 30px rgba(15, 23, 42, 0.85);
+        border-color: rgba(249, 115, 22, 0.45);
+        background: radial-gradient(
+          circle at top,
+          rgba(249, 115, 22, 0.13),
+          rgba(15, 23, 42, 0.98)
+        );
+      }
+
+      .card-image-wrap {
+        border-radius: 14px;
+        overflow: hidden;
+        position: relative;
+        aspect-ratio: 4 / 3;
+        background: #020617;
+      }
+
+      .card-image-wrap img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        transform: scale(1.02);
+        transition: transform 0.25s ease;
+      }
+
+      .card:hover img {
+        transform: scale(1.06);
+      }
+
+      .card-pill {
+        position: absolute;
+        bottom: 10px;
+        left: 10px;
+        padding: 0.25rem 0.6rem;
+        border-radius: 999px;
+        font-size: 0.7rem;
+        background: rgba(15, 23, 42, 0.86);
+        color: var(--text-muted);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(15, 23, 42, 0.9);
+      }
+
+      .card-title {
+        font-size: 1rem;
+        font-weight: 600;
+        text-transform: capitalize;
+      }
+
+      .card-desc {
+        font-size: 0.82rem;
+        color: var(--text-muted);
+        min-height: 2.2em;
+      }
+
+      .card-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 0.8rem;
+        color: var(--text-muted);
+        margin-top: 0.2rem;
+      }
+
+      .badge-mini {
+        padding: 0.15rem 0.45rem;
+        border-radius: 999px;
+        background: var(--accent-soft);
+        color: var(--accent);
+        border: 1px solid rgba(249, 115, 22, 0.45);
+        font-size: 0.7rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+
+      .status {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.25rem;
+      }
+
+      .status-dot {
+        width: 7px;
+        height: 7px;
+        border-radius: 999px;
+        background: #22c55e;
+      }
+
+      .status-text {
+        font-size: 0.78rem;
+        color: var(--text-muted);
+      }
+
+      .state {
+        text-align: center;
+        padding: 2rem 1rem;
+        color: var(--text-muted);
+        font-size: 0.9rem;
+      }
+
+      footer {
+        margin-top: 1.25rem;
+        font-size: 0.75rem;
+        color: var(--text-muted);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+      }
+
+      footer span {
+        opacity: 0.75;
+      }
+
+      @media (max-width: 640px) {
+        main {
+          padding: 1.2rem 1rem 1.3rem;
+        }
+        header {
+          margin-bottom: 1.7rem;
+        }
+        .toolbar {
+          align-items: flex-start;
+          flex-direction: column;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <header>
+        <div class="badge">
+          <span class="badge-dot"></span>
+          Paradise Donut Company · Prototype
+        </div>
+        <h1>Cheesecake <span>showcase</span> for 31,000 locations.</h1>
+        <p class="subtitle">
+          This serverless prototype demonstrates how a single API-powered menu
+          could support thousands of retail locations. Items are served by AWS
+          API Gateway &amp; Lambda and rendered from S3-hosted assets.
+        </p>
+        <div class="pill-row">
+          <div class="pill">AWS Lambda · Node.js 24</div>
+          <div class="pill">HTTP API Gateway</div>
+          <div class="pill">S3 Static Website</div>
+        </div>
+      </header>
+
+      <main>
+        <div class="toolbar">
+          <div class="toolbar-left">
+            <div class="tag">Menu</div>
+            <div class="stat">
+              <span class="dot"></span>
+              <span id="item-count-label">Loading menu…</span>
+            </div>
+          </div>
+
+          <select class="filter-select" id="sort-select">
+            <option value="name-asc">Sort: A → Z</option>
+            <option value="name-desc">Sort: Z → A</option>
+          </select>
+        </div>
+
+        <div id="state" class="state">Loading cheesecakes from the API…</div>
+        <div id="grid" class="grid" style="display: none"></div>
+      </main>
+
+      <footer>
+        <span>Demo environment – not for real orders.</span>
+        <span>Powered by AWS S3 · API Gateway · Lambda</span>
+      </footer>
+    </div>
+
+    <script>
+      const API_URL =
+        "https://w84uhgwu12.execute-api.us-east-1.amazonaws.com/items";
+      const gridEl = document.getElementById("grid");
+      const stateEl = document.getElementById("state");
+      const countLabelEl = document.getElementById("item-count-label");
+      const sortSelectEl = document.getElementById("sort-select");
+
+      let items = [];
+
+      function buildDescription(name) {
+        return `Rich ${name.toLowerCase()} cheesecake, prepared fresh daily for in-store display.`;
+      }
+
+      function render() {
+        if (!items.length) {
+          stateEl.textContent =
+            "No cheesecakes found. Please check that DynamoDB has items.";
+          gridEl.style.display = "none";
+          return;
+        }
+
+        stateEl.style.display = "none";
+        gridEl.style.display = "grid";
+        gridEl.innerHTML = "";
+
+        const sort = sortSelectEl.value;
+        const sorted = [...items].sort((a, b) => {
+          const na = a.name.toLowerCase();
+          const nb = b.name.toLowerCase();
+          if (sort === "name-asc") return na.localeCompare(nb);
+          if (sort === "name-desc") return nb.localeCompare(na);
+          return 0;
+        });
+
+        countLabelEl.textContent = `${sorted.length} cheesecakes on display`;
+
+        for (const item of sorted) {
+          const card = document.createElement("article");
+          card.className = "card";
+
+          const wrap = document.createElement("div");
+          wrap.className = "card-image-wrap";
+
+          const img = document.createElement("img");
+          img.src = item.imageUrl;
+          img.alt = item.name + " cheesecake";
+
+          const pill = document.createElement("div");
+          pill.className = "card-pill";
+          pill.textContent = "In-stock · Demo";
+
+          wrap.appendChild(img);
+          wrap.appendChild(pill);
+
+          const title = document.createElement("h2");
+          title.className = "card-title";
+          title.textContent = item.name;
+
+          const desc = document.createElement("p");
+          desc.className = "card-desc";
+          desc.textContent =
+            item.description || "Cheesecake description loaded from DynamoDB.";
+
+          const footer = document.createElement("div");
+          footer.className = "card-footer";
+
+          const priceSpan = document.createElement("span");
+          priceSpan.className = "badge-mini";
+          if (typeof item.price === "number") {
+            priceSpan.textContent = `$${item.price.toFixed(2)}`;
+          } else {
+            priceSpan.textContent = "Price TBD";
+          }
+
+          const status = document.createElement("div");
+          status.className = "status";
+          status.innerHTML =
+            '<span class="status-dot"></span><span class="status-text">Live from DynamoDB</span>';
+
+          footer.appendChild(priceSpan);
+          footer.appendChild(status);
+
+          card.appendChild(wrap);
+          card.appendChild(title);
+          card.appendChild(desc);
+          card.appendChild(footer);
+
+          gridEl.appendChild(card);
+        }
+      }
+
+      async function loadCheesecakes() {
+        try {
+          const res = await fetch(API_URL, { mode: "cors" });
+          if (!res.ok) throw new Error("HTTP " + res.status);
+          const data = await res.json();
+          items = data.items || [];
+          render();
+        } catch (err) {
+          console.error(err);
+          stateEl.textContent =
+            "Unable to load menu from the API. Please verify your API Gateway URL and CORS settings.";
+          countLabelEl.textContent = "Error loading menu";
+          gridEl.style.display = "none";
+        }
+      }
+
+      sortSelectEl.addEventListener("change", render);
+      loadCheesecakes();
+    </script>
+  </body>
+</html>
